@@ -1,6 +1,141 @@
 // src/web.ts
-export * from "tfhe";
-import { default as default2 } from "tfhe";
+var wasmInstance = null;
+var goInstance = null;
+var initPromise = null;
+async function init(wasmUrl) {
+  if (wasmInstance) return;
+  if (initPromise) return initPromise;
+  initPromise = (async () => {
+    if (typeof Go === "undefined") {
+      await loadScript(new URL("../wasm/wasm_exec.js", import.meta.url).href);
+    }
+    const go = new Go();
+    goInstance = go;
+    const wasmPath = wasmUrl || new URL("../wasm/luxfhe.wasm", import.meta.url).href;
+    const response = await fetch(wasmPath);
+    const wasmBuffer = await response.arrayBuffer();
+    const wasmModule = await WebAssembly.compile(wasmBuffer);
+    wasmInstance = await WebAssembly.instantiate(wasmModule, go.importObject);
+    go.run(wasmInstance);
+  })();
+  return initPromise;
+}
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = src;
+    script.onload = () => resolve();
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+}
+function getLuxFHE() {
+  if (!wasmInstance) {
+    throw new Error("FHE not initialized. Call init() first.");
+  }
+  return globalThis.luxfhe;
+}
+async function generateKeys() {
+  await init();
+  const fhe = getLuxFHE();
+  return fhe.generateKeys();
+}
+async function encrypt(value, publicKey) {
+  await init();
+  const fhe = getLuxFHE();
+  return fhe.encrypt(value, publicKey);
+}
+async function decrypt(ciphertext, privateKey) {
+  await init();
+  const fhe = getLuxFHE();
+  return fhe.decrypt(ciphertext, privateKey);
+}
+function init_panic_hook() {
+}
+async function initThreadPool(numThreads) {
+}
+var TfheCompactPublicKey = class _TfheCompactPublicKey {
+  key;
+  constructor(key) {
+    this.key = key || new Uint8Array();
+  }
+  static deserialize(bytes) {
+    return new _TfheCompactPublicKey(bytes);
+  }
+  serialize() {
+    return this.key;
+  }
+};
+var CompactPkeCrs = class _CompactPkeCrs {
+  static from_config(config, maxBits) {
+    return new _CompactPkeCrs();
+  }
+};
+var CompactPkePublicParams = class _CompactPkePublicParams {
+  static new(crs, maxBits) {
+    return new _CompactPkePublicParams();
+  }
+  static deserialize(bytes) {
+    return new _CompactPkePublicParams();
+  }
+  serialize() {
+    return new Uint8Array();
+  }
+};
+var CompactCiphertextList = class _CompactCiphertextList {
+  data;
+  constructor(data) {
+    this.data = data || new Uint8Array();
+  }
+  static builder(params) {
+    return new CompactCiphertextListBuilder();
+  }
+  static deserialize(bytes) {
+    return new _CompactCiphertextList(bytes);
+  }
+  serialize() {
+    return this.data;
+  }
+};
+var CompactCiphertextListBuilder = class {
+  push(value) {
+    return this;
+  }
+  build() {
+    return new CompactCiphertextList();
+  }
+  build_with_proof_packed(key, load) {
+    return {
+      list: new CompactCiphertextList(),
+      proof: new Uint8Array()
+    };
+  }
+};
+var ZkComputeLoad = /* @__PURE__ */ ((ZkComputeLoad2) => {
+  ZkComputeLoad2["Proof"] = "Proof";
+  ZkComputeLoad2["Verify"] = "Verify";
+  return ZkComputeLoad2;
+})(ZkComputeLoad || {});
+async function initTFHE(options) {
+  if (options?.module_or_path && typeof options.module_or_path === "string") {
+    await init(options.module_or_path);
+  } else {
+    await init();
+  }
+}
 export {
-  default2 as default
+  CompactCiphertextList,
+  CompactCiphertextListBuilder,
+  CompactPkeCrs,
+  CompactPkePublicParams,
+  TfheCompactPublicKey,
+  ZkComputeLoad,
+  decrypt,
+  initTFHE as default,
+  encrypt,
+  generateKeys,
+  getLuxFHE,
+  init,
+  initThreadPool,
+  init_panic_hook
 };
