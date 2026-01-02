@@ -37,7 +37,7 @@
     "build:wasm": "cd ~/work/lux/fhe && GOOS=js GOARCH=wasm go build -o sdk/wasm/luxfhe.wasm ./sdk/wasm/",
     "build:copy": "cp ~/work/lux/fhe/sdk/wasm/luxfhe.wasm wasm/ && cp $(go env GOROOT)/lib/wasm/wasm_exec.js wasm/",
     "build:ts": "tsup",
-    "build": "pnpm build:copy && pnpm build:ts"
+    "build": "npm run build:ts"
   },
   "dependencies": {},
   "devDependencies": {
