@@ -24,6 +24,7 @@ __export(web_exports, {
   CompactCiphertextListBuilder: () => CompactCiphertextListBuilder,
   CompactPkeCrs: () => CompactPkeCrs,
   CompactPkePublicParams: () => CompactPkePublicParams,
+  InitInput: () => InitInput,
   TfheCompactPublicKey: () => TfheCompactPublicKey,
   ZkComputeLoad: () => ZkComputeLoad,
   decrypt: () => decrypt,
@@ -40,6 +41,7 @@ var import_meta = {};
 var wasmInstance = null;
 var goInstance = null;
 var initPromise = null;
+var InitInput = null;
 async function init(wasmUrl) {
   if (wasmInstance) return;
   if (initPromise) return initPromise;
@@ -167,6 +169,7 @@ async function initTFHE(options) {
   CompactCiphertextListBuilder,
   CompactPkeCrs,
   CompactPkePublicParams,
+  InitInput,
   TfheCompactPublicKey,
   ZkComputeLoad,
   decrypt,

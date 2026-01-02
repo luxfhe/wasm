@@ -8,6 +8,7 @@
  * InitInput type for backward compatibility with Zama TFHE
  */
 type InitInput = string | URL | Request | Response | ArrayBuffer | WebAssembly.Module;
+declare const InitInput: InitInput;
 /**
  * Initialize the FHE WASM module
  */
@@ -99,4 +100,4 @@ declare function initTFHE(options?: {
     module_or_path?: InitInput;
 }): Promise<void>;
 
-export { CompactCiphertextList, CompactCiphertextListBuilder, CompactPkeCrs, CompactPkePublicParams, type InitInput, type LuxFHEKeys, TfheCompactPublicKey, ZkComputeLoad, decrypt, initTFHE as default, encrypt, generateKeys, getLuxFHE, init, initThreadPool, init_panic_hook };
+export { CompactCiphertextList, CompactCiphertextListBuilder, CompactPkeCrs, CompactPkePublicParams, InitInput, type LuxFHEKeys, TfheCompactPublicKey, ZkComputeLoad, decrypt, initTFHE as default, encrypt, generateKeys, getLuxFHE, init, initThreadPool, init_panic_hook };

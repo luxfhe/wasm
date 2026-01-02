@@ -11,6 +11,7 @@ import * as path from "path";
 var wasmInstance = null;
 var goInstance = null;
 var initPromise = null;
+var InitInput = null;
 async function init() {
   if (wasmInstance) return;
   if (initPromise) return initPromise;
@@ -122,6 +123,7 @@ export {
   CompactCiphertextListBuilder,
   CompactPkeCrs,
   CompactPkePublicParams,
+  InitInput,
   TfheCompactPublicKey,
   ZkComputeLoad,
   decrypt,

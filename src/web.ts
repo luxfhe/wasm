@@ -17,6 +17,9 @@ let initPromise: Promise<void> | null = null;
  */
 export type InitInput = string | URL | Request | Response | ArrayBuffer | WebAssembly.Module;
 
+// Runtime placeholder for InitInput (needed for rollup bundling)
+export const InitInput = null as unknown as InitInput;
+
 /**
  * Initialize the FHE WASM module
  */

@@ -1,6 +1,6 @@
 {
   "name": "@luxfhe/wasm",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "LuxFHE Go WASM bindings for web and node",
   "type": "module",
   "main": "./dist/node/index.js",
