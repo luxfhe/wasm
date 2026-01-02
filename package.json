@@ -28,7 +28,8 @@
       "types": "./dist/web/index.d.ts",
       "import": "./dist/web/index.js",
       "require": "./dist/web/index.cjs"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "dist"
