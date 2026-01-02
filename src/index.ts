@@ -45,7 +45,7 @@ export async function init(wasmUrl?: string): Promise<LuxFHE> {
   // Load wasm_exec.js (Go's WASM runtime)
   if (typeof window !== 'undefined' && !window.Go) {
     const script = document.createElement('script');
-    script.src = wasmUrl?.replace('tfhe.wasm', 'wasm_exec.js') || '/wasm/wasm_exec.js';
+    script.src = wasmUrl?.replace('luxfhe.wasm', 'wasm_exec.js') || '/wasm/wasm_exec.js';
     await new Promise((resolve, reject) => {
       script.onload = resolve;
       script.onerror = reject;
@@ -57,7 +57,7 @@ export async function init(wasmUrl?: string): Promise<LuxFHE> {
   goInstance = new window.Go();
 
   // Load and instantiate WASM
-  const wasmPath = wasmUrl || '/wasm/tfhe.wasm';
+  const wasmPath = wasmUrl || '/wasm/luxfhe.wasm';
   const response = await fetch(wasmPath);
   const wasmBuffer = await response.arrayBuffer();
 
