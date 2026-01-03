@@ -1,6 +1,6 @@
 {
   "name": "@luxfhe/wasm",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "LuxFHE Go WASM bindings for web and node",
   "type": "module",
   "main": "./dist/node/index.js",
@@ -32,7 +32,8 @@
     "./package.json": "./package.json"
   },
   "files": [
-    "dist"
+    "dist",
+    "wasm"
   ],
   "scripts": {
     "build:wasm": "cd ~/work/lux/fhe && GOOS=js GOARCH=wasm go build -o sdk/wasm/luxfhe.wasm ./sdk/wasm/",
