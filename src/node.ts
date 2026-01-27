@@ -2,7 +2,7 @@
  * LuxFHE WASM Node.js bindings
  *
  * Native Go FHE compiled to WebAssembly for Node.js
- * Includes backward-compatible exports for Zama TFHE interface
+ * Includes backward-compatible exports for legacy TFHE interface
  */
 
 import * as fs from 'fs';
@@ -16,7 +16,7 @@ let goInstance: any = null;
 let initPromise: Promise<void> | null = null;
 
 /**
- * InitInput type for backward compatibility with Zama TFHE
+ * InitInput type for backward compatibility with legacy TFHE
  */
 export type InitInput = string | URL | ArrayBuffer | WebAssembly.Module;
 
@@ -96,26 +96,26 @@ export async function decrypt(ciphertext: Uint8Array, privateKey: Uint8Array): P
 }
 
 // ============================================================================
-// Backward-compatible exports for Zama TFHE interface
+// Backward-compatible exports for legacy TFHE interface
 // These are stubs that map to our native Go FHE implementation
 // ============================================================================
 
 /**
- * Initialize panic hook - stub for Zama compatibility
+ * Initialize panic hook - stub for legacy compatibility
  */
 export function init_panic_hook(): void {
   // No-op for native Go FHE
 }
 
 /**
- * Initialize thread pool - stub for Zama compatibility
+ * Initialize thread pool - stub for legacy compatibility
  */
 export async function initThreadPool(numThreads?: number): Promise<void> {
   // No-op for native Go FHE - Go handles concurrency natively
 }
 
 /**
- * TfheCompactPublicKey - stub class for Zama compatibility
+ * TfheCompactPublicKey - stub class for legacy compatibility
  */
 export class TfheCompactPublicKey {
   private key: Uint8Array;
@@ -134,7 +134,7 @@ export class TfheCompactPublicKey {
 }
 
 /**
- * CompactPkeCrs - stub class for Zama compatibility
+ * CompactPkeCrs - stub class for legacy compatibility
  */
 export class CompactPkeCrs {
   static from_config(config: any, maxBits: number): CompactPkeCrs {
@@ -143,7 +143,7 @@ export class CompactPkeCrs {
 }
 
 /**
- * CompactPkePublicParams - stub class for Zama compatibility
+ * CompactPkePublicParams - stub class for legacy compatibility
  */
 export class CompactPkePublicParams {
   static new(crs: CompactPkeCrs, maxBits: number): CompactPkePublicParams {
@@ -160,7 +160,7 @@ export class CompactPkePublicParams {
 }
 
 /**
- * CompactCiphertextList - stub class for Zama compatibility
+ * CompactCiphertextList - stub class for legacy compatibility
  */
 export class CompactCiphertextList {
   private data: Uint8Array;
@@ -183,7 +183,7 @@ export class CompactCiphertextList {
 }
 
 /**
- * CompactCiphertextListBuilder - stub class for Zama compatibility
+ * CompactCiphertextListBuilder - stub class for legacy compatibility
  */
 export class CompactCiphertextListBuilder {
   push(value: any): CompactCiphertextListBuilder {
@@ -206,7 +206,7 @@ export class CompactCiphertextListBuilder {
 }
 
 /**
- * ZkComputeLoad enum - stub for Zama compatibility
+ * ZkComputeLoad enum - stub for legacy compatibility
  */
 export enum ZkComputeLoad {
   Proof = 'Proof',
@@ -214,7 +214,7 @@ export enum ZkComputeLoad {
 }
 
 /**
- * Default export matching Zama TFHE init signature
+ * Default export matching legacy TFHE init signature
  */
 export default async function initTFHE(options?: { module_or_path?: InitInput }): Promise<void> {
   await init();
